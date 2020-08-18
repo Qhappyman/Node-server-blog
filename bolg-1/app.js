@@ -1,8 +1,14 @@
-const handleBlogRouter = require('./src/router/blog')
+const handleBlogRouter = require('./src/router/blog')    //引入路由
 const handleUserRouter = require('./src/router/user')
-
+const querystring = require('querystring')
 const serverHandle = (req,res)=>{
     res.setHeader('Content-type','application-json')
+    const method = req.method
+    const url = req.url
+    const path = url.split('?')[0]
+
+    //解析 query
+    req.query = querystring.parse(url.split('?')[0])
 
     //处理blog路由
     const blogData = handleBlogRouter(req,res)
@@ -14,10 +20,15 @@ const serverHandle = (req,res)=>{
     }
 
     //处理user路由
-    const userData = handleUserRouter(req,res)
+    const userData = handleUserRouter(req,res)     //内部处理数据封装在了route组件里面
     if(userData){
         res.end(
-            JSON.stringify(userData)
+            // JSON.stringify(userData)
+            JSON.stringify({
+                errno:0,
+                data:{},
+                message:'xxx'
+            })
         )
         return
     }
