@@ -24,7 +24,7 @@ const serverHandle = (req,res)=>{
     if(userData){
         res.end(
             // JSON.stringify(userData)
-            JSON.stringify({
+            JSON.stringify({   //返回的数据格式，在resModel.js里面已经封装好了
                 errno:0,
                 data:{},
                 message:'xxx'
