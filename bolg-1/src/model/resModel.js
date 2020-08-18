@@ -1,4 +1,4 @@
-class BaseModel{                       //处理error与success的模型
+class BaseModel{                       //处理error与success模型
     constructor(data,message){
         if(typeof data === 'string'){  //data:object,message:string
             this.message = data
