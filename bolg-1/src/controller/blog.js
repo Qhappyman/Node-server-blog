@@ -24,6 +24,36 @@ const getList = (author,keyword) => {   //模拟数据
         }
     ]
 }
+
+const getDetail = (id) =>{
+    return{
+            id: 3,
+            title: '标题3',
+            content: '内容3',
+            createTime: 158946135,
+            autor: 'the shy'
+        
+    }
+}
+
+const newBlog = (blogData = {})=>{
+    return{
+        id:3      //新建博客插入到数据表里面的id
+
+    }
+}
+
+const updateBlog = (id,blogData={})=>{
+    return true
+}
+
+const delBlog=(id)=>{
+    return true
+}
 module.exports = {
-    getList
+    getList,
+    getDetail,
+    newBlog,
+    updateBlog,
+    delBlog
 }
