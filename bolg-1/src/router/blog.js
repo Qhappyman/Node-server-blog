@@ -29,9 +29,9 @@ const handleBlogRouter = (req,res)=>{
 
     //新建博客
     if (method === 'POST' && path === '/api/blog/new') {
-        const blogData = req.body
-        const data = newBlog(blogData)
-        const author = 'zhangsan'  //假数据，登录时才会有
+        req.body.author = 'gjq' //假数据，登录时才会有
+        const data = newBlog(req.body)
+        
         data.then(result=>{
             return new SuccessModel(result)
         })
@@ -39,7 +39,7 @@ const handleBlogRouter = (req,res)=>{
     }
     //更新博客
     if (method === 'POST' && path === '/api/blog/update') {
-        const result = updateBlog(id,req.body)
+        const result = updateBlog(id,req.body)  //这里的id需要自己加
         console.log(result)
         return result.then(val=>{
             if (val) {
@@ -53,8 +53,7 @@ const handleBlogRouter = (req,res)=>{
 
     //删除博客
     if (method === 'POST' && path === '/api/blog/del') {
-        const result = delBlog(2)
-        const author = 'gjq'
+        const result = delBlog(id,'gjq')
         return result.then(val => {
             if (val) {
                 return new SuccessModel(result)
