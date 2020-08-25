@@ -13,12 +13,12 @@ const handleUserRouter = (req, res) => {
             const {username,password} = req.body
             const result = login(username,password)
             console.log(result)
-            if(result){
-                return new SuccessModel(result)
-            }
-            else{
+            return result.then(data=>{
+                if(data.username){
+                    return new SuccessModel()
+                }
                 return new ErrorModel('登录失败')
-            }
+            })
         }
 }
 module.exports = handleUserRouter

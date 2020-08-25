@@ -1,9 +1,9 @@
+const {exec} = require('../db/mysql')
 const login = function(username,password){
-    if(username === 'zs' && password === '123')
-        return true    
-    else{
-        return false
-    }
+    const sql = `select username,realname from users where username='${username}'`
+    return exec(sql).then(rows=>{
+        return rows[0]||{}
+    })
 
 }
 

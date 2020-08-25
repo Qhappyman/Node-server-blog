@@ -41,21 +41,26 @@ const serverHandle = (req,res)=>{
         req.body = postData
 
         //处理blog路由
-        const blogData = handleBlogRouter(req, res)
+        const blogData = handleBlogRouter(req, res)  //现在反悔的是promise
         if (blogData) {
-            res.end(
-                JSON.stringify(blogData)
-            )
+            blogData.then(data=>{
+                res.end(
+                    JSON.stringify(data)
+                )
+            })           
             return
         }
 
         //处理user路由
         const userData = handleUserRouter(req, res) //内部处理数据封装在了route组件里面
         if (userData) {
-            res.end(
-                JSON.stringify(userData)
-            )
-            return
+            userData.then(data=>{
+                res.end(
+                    JSON.stringify(data)
+                )
+                return
+            })
+            
         }
         //未命中返回404
         res.writeHead(404, {
