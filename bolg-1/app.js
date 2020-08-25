@@ -44,6 +44,7 @@ const serverHandle = (req,res)=>{
         const blogData = handleBlogRouter(req, res)  //现在反悔的是promise
         if (blogData) {
             blogData.then(data=>{
+                console.log(666)
                 res.end(
                     JSON.stringify(data)
                 )

@@ -6,12 +6,12 @@ const con = mysql.createConnection({
     user: 'root',
     // passowrd: "",
     port:'3306',
-    database:'users'
+    database:'myblog'
 })
 
 con.connect()
 
-const sql ='select * from user'
+const sql =`select * from blogs;`
 con.query(sql,(err,result)=>{
     if(err){
         console.error(err)

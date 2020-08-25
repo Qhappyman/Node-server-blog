@@ -13,7 +13,7 @@ const handleBlogRouter = (req,res)=>{
         const keyword = req.query.keyword ||''
         const result = getList(author,keyword)
         // return new SuccessModel(listData)
-        result.then(listData=>{
+        return result.then(listData=>{
             return new SuccessModel(listData)
         })
     }
@@ -53,8 +53,8 @@ const handleBlogRouter = (req,res)=>{
 
     //删除博客
     if (method === 'POST' && path === '/api/blog/del') {
-        const result = delBlog(id)
-        const author = 'zhangsan'
+        const result = delBlog(2)
+        const author = 'gjq'
         return result.then(val => {
             if (val) {
                 return new SuccessModel(result)
