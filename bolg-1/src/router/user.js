@@ -28,6 +28,9 @@ const handleUserRouter = (req, res) => {
                     //设置cookie，登录验证,ohttpOnly，防止客户端修改cookie,对外界隐藏cookie,客户端设置的cookie和服务器设置的解析不同，即使key,value在客户端都添加新的，，但是服务器仍然只能解析到自己发送是cookie
                     res.setHeader('Set-Cookie',`username=${data.username};path=/;httpOnly;expires=${getCookieExpires()}`)
 
+                    //设置session
+                    req.session.username = data.username
+                    req.session.realname = data.realname
                     return new SuccessModel()
                 }
                 return new ErrorModel('登录失败')
