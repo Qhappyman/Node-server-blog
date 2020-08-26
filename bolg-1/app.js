@@ -42,9 +42,9 @@ const serverHandle = (req,res)=>{
 
         //处理blog路由
         const blogData = handleBlogRouter(req, res)  //现在反悔的是promise
+        console.log('blogData:',blogData)
         if (blogData) {
             blogData.then(data=>{
-                console.log(666)
                 res.end(
                     JSON.stringify(data)
                 )
@@ -59,10 +59,10 @@ const serverHandle = (req,res)=>{
                 res.end(
                     JSON.stringify(data)
                 )
-                return
             })
-            
+            return
         }
+        
         //未命中返回404
         res.writeHead(404, {
             "Content-type": "text/plain"

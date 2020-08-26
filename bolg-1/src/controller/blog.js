@@ -9,6 +9,7 @@ const getList = (author,keyword) => {   //模拟数据
         sql+=`and title like '%${keyword}' `
     }
     sql+=`order by createtime desc;`
+    console.log(sql)
     return exec(sql)
 }
 
@@ -24,7 +25,7 @@ const newBlog = (blogData = {})=>{
     const content = blogData.content
     const author = blogData.author
     const createTime = Date.now()
-    const sql = `insert into blogs (title,content,createtime,author) values ('${title}','${content}','${author}','${createTime}')`
+    const sql = `insert into blogs (title,content,createtime,author) values ('${title}','${content}','${createTime}','${author}')`
     return exec(sql).then(insertData=>{    //inserId为执行SQL返回的字段
         return{
             id:insertData.insertId

@@ -32,7 +32,7 @@ const handleBlogRouter = (req,res)=>{
         req.body.author = 'gjq' //假数据，登录时才会有
         const data = newBlog(req.body)
         
-        data.then(result=>{
+        return data.then(result=>{
             return new SuccessModel(result)
         })
 
