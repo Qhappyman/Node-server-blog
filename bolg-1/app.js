@@ -1,6 +1,7 @@
 const handleBlogRouter = require('./src/router/blog')    //引入路由
 const handleUserRouter = require('./src/router/user')
 const querystring = require('querystring')
+const user = require('./src/controller/user')
 
 //处理postData
 const getPostData = (req) =>{
@@ -52,7 +53,20 @@ const serverHandle = (req,res)=>{
         req.cookie[key] = value
     })
 
-    //解析
+    //解析session
+    let needSetCookie = false   //判断是否需要设置session
+    let userId = req.cookie.userId
+    if(userId){
+        if(!SESSION_DATA[userId]){
+            SESSION_DATA[userId]={}
+        }
+    }
+    else{
+        needSetCookie = true;
+        userId = Date.now() 
+        SESSION_DATA[userId] = {}
+    }
+    req.session = SESSION_DATA[userId]
 
     //处理post data
     getPostData(req).then((postData)=>{
@@ -63,6 +77,9 @@ const serverHandle = (req,res)=>{
         console.log('blogData:',blogData)
         if (blogData) {
             blogData.then(data=>{
+                if(needSetCookie){
+                    res.setHeader('Set-Cookie', `userId=${userId};path=/;httpOnly`)
+                }
                 res.end(
                     JSON.stringify(data)
                 )
@@ -74,6 +91,9 @@ const serverHandle = (req,res)=>{
         const userData = handleUserRouter(req, res) //内部处理数据封装在了route组件里面
         if (userData) {
             userData.then(data=>{
+                if (needSetCookie) {
+                    res.setHeader('Set-Cookie', `userId=${userId};path=/;httpOnly`)
+                }
                 res.end(
                     JSON.stringify(data)
                 )
