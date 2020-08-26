@@ -33,8 +33,26 @@ const serverHandle = (req,res)=>{
     const url = req.url
     const path = url.split('?')[0]
 
+    //设置全局session
+    const SESSION_DATA = {}
+
     //解析 query
     req.query = querystring.parse(url.split('?')[1])
+
+    //解析cookies
+    req.cookie = {}    //浏览器发送请求时自动将cookie加入请求头
+    const cookieStr = req.headers.cookie||''
+    cookieStr.split(';').forEach(item=>{
+        if(!item){
+            return
+        }
+        const arr = item.split('=')
+        const key=arr[0]    //浏览器拼接cookie时会在一个cookie值后添加空格，解析到的cookie key值带有空格
+        const value=arr[1]
+        req.cookie[key] = value
+    })
+
+    //解析
 
     //处理post data
     getPostData(req).then((postData)=>{
